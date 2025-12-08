@@ -1,4 +1,4 @@
-import type { Todo } from 'components/models';
+import type { Todo } from '@/types/models';
 
 let todos: Todo[] = [
   { id: 1, content: 'Learn Quasar' },

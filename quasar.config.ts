@@ -45,7 +45,12 @@ export default defineConfig((ctx) => {
       typescript: {
         strict: true,
         vueShim: true,
-        // extendTsConfig (tsConfig) {}
+        extendTsConfig (tsConfig) {
+          tsConfig.compilerOptions = tsConfig.compilerOptions || {};
+          tsConfig.compilerOptions.types = tsConfig.compilerOptions.types || [];
+          tsConfig.compilerOptions.types.push('vitest/globals');
+          tsConfig.compilerOptions.types.push('@vue/test-utils');
+        }
       },
 
       vueRouterMode: 'hash', // available values: 'hash', 'history'
@@ -102,7 +107,7 @@ export default defineConfig((ctx) => {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#devserver
     devServer: {
       // https: true,
-      open: true, // opens browser window automatically
+      open: false, // opens browser window automatically
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#framework

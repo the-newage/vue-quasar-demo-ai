@@ -1,11 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/vue-query';
 import { getTodos, createTodo } from '@/api/todos';
-import type { Todo } from 'components/models';
+import type { Todo } from '@/types/models';
 
 export function useTodosQuery() {
   return useQuery<Todo[], Error>({
     queryKey: ['todos'],
     queryFn: getTodos,
+    enabled: true,
   });
 }
 
