@@ -46,7 +46,7 @@ async function onSubmit(values: TodoFormValues, context: SubmissionContext) {
   try {
     await createTodo(values.content);
     context.resetForm();
-  } catch (err: unknown) {
+  } catch {
     formError.value = t('failedToAddTodo');
   }
 }

@@ -45,6 +45,13 @@ export default defineConfigWithVueTs(
   vueTsConfigs.recommendedTypeChecked,
 
   {
+    files: ['**/*.spec.ts'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+
+  {
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',

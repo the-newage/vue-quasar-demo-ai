@@ -3,20 +3,24 @@ import { useTodosQuery, useCreateTodoMutation } from '../useTodosQuery';
 import * as todosApi from '@/api/todos';
 import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query';
 import { mount } from '@vue/test-utils';
-import { defineComponent } from 'vue';
 
 vi.mock('@/api/todos');
 
 const queryClient = new QueryClient();
 
-const TestComponent = defineComponent({
+interface TestComponentInstance {
+  todosQuery: ReturnType<typeof useTodosQuery>;
+  createTodoMutation: ReturnType<typeof useCreateTodoMutation>;
+}
+
+const TestComponent = {
   template: '<div />',
   setup() {
     const todosQuery = useTodosQuery();
     const createTodoMutation = useCreateTodoMutation();
     return { todosQuery, createTodoMutation };
   },
-});
+};
 
 describe('useTodosQuery', () => {
   it('fetches todos', async () => {
@@ -29,9 +33,9 @@ describe('useTodosQuery', () => {
       },
     });
 
-    await wrapper.vm.todosQuery.refetch();
+    await ((wrapper.vm as any) as TestComponentInstance).todosQuery.refetch();
 
-    expect(wrapper.vm.todosQuery.data.value).toEqual(mockTodos);
+    expect(((wrapper.vm as any) as TestComponentInstance).todosQuery.data.value).toEqual(mockTodos);
   });
 });
 
@@ -47,7 +51,7 @@ describe('useCreateTodoMutation', () => {
       },
     });
 
-    await wrapper.vm.createTodoMutation.mutateAsync('New Todo');
+    await ((wrapper.vm as any) as TestComponentInstance).createTodoMutation.mutateAsync('New Todo');
 
     expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey: ['todos'] });
   });
