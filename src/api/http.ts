@@ -22,6 +22,6 @@ http.interceptors.response.use(
       // const auth = useAuthStore();
       // auth.logout();
     }
-    return Promise.reject(error);
+    return Promise.reject(new Error(error.message));
   }
 );

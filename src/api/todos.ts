@@ -13,12 +13,16 @@ export async function getTodos(): Promise<Todo[]> {
 }
 
 export async function createTodo(content: string): Promise<Todo> {
-  // Simulate a network delay
-  await new Promise(resolve => setTimeout(resolve, 500));
-  const newTodo: Todo = {
-    id: todos.length + 1,
-    content,
-  };
-  todos = [...todos, newTodo];
-  return Promise.resolve(newTodo);
+  try {
+    // Simulate a network delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    const newTodo: Todo = {
+      id: todos.length + 1,
+      content,
+    };
+    todos = [...todos, newTodo];
+    return Promise.resolve(newTodo);
+  } catch {
+    return Promise.reject(new Error('Failed to create todo'));
+  }
 }

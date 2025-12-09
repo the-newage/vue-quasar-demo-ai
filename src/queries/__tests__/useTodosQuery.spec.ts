@@ -3,20 +3,19 @@ import { useTodosQuery, useCreateTodoMutation } from '../useTodosQuery';
 import * as todosApi from '@/api/todos';
 import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query';
 import { mount } from '@vue/test-utils';
-import { defineComponent } from 'vue';
 
 vi.mock('@/api/todos');
 
 const queryClient = new QueryClient();
 
-const TestComponent = defineComponent({
+const TestComponent = {
   template: '<div />',
   setup() {
     const todosQuery = useTodosQuery();
     const createTodoMutation = useCreateTodoMutation();
     return { todosQuery, createTodoMutation };
   },
-});
+};
 
 describe('useTodosQuery', () => {
   it('fetches todos', async () => {
