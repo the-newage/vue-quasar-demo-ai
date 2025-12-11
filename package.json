@@ -10,6 +10,7 @@
     "lint": "eslint -c ./eslint.config.js \"./src*/**/*.{ts,js,cjs,mjs,vue}\"",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "vitest",
+    "test:e2e": "playwright test",
     "dev": "quasar dev",
     "build": "quasar build",
     "postinstall": "quasar prepare"
@@ -30,6 +31,7 @@
   "devDependencies": {
     "@eslint/js": "^9.14.0",
     "@intlify/unplugin-vue-i18n": "^4.0.0",
+    "@playwright/test": "^1.57.0",
     "@quasar/app-vite": "^2.1.0",
     "@types/node": "^20.5.9",
     "@vue/eslint-config-prettier": "^10.1.0",

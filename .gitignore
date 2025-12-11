@@ -32,3 +32,9 @@ npm_output.log
 
 # local .env files
 .env.local*
+
+# Logs
+*.log
+
+# Test results
+test-results/

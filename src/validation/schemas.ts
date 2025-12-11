@@ -5,3 +5,10 @@ export const todoSchema = z.object({
 });
 
 export type TodoFormValues = z.infer<typeof todoSchema>;
+
+export const profileSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  email: z.string().email('Invalid email address'),
+});
+
+export type ProfileFormValues = z.infer<typeof profileSchema>;
