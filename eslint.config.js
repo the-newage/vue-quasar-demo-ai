@@ -47,7 +47,7 @@ export default defineConfigWithVueTs(
   {
     files: ['**/*.spec.ts'],
     rules: {
-      '@typescript-eslint/no-explicit-any': 'off',
+      // Keep strict typing even in tests - use proper types instead of 'any'
     },
   },
 

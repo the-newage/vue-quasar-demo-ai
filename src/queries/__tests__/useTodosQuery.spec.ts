@@ -33,9 +33,9 @@ describe('useTodosQuery', () => {
       },
     });
 
-    await ((wrapper.vm as any) as TestComponentInstance).todosQuery.refetch();
+    await (wrapper.vm as unknown as TestComponentInstance).todosQuery.refetch();
 
-    expect(((wrapper.vm as any) as TestComponentInstance).todosQuery.data.value).toEqual(mockTodos);
+    expect((wrapper.vm as unknown as TestComponentInstance).todosQuery.data.value).toEqual(mockTodos);
   });
 });
 
@@ -51,7 +51,7 @@ describe('useCreateTodoMutation', () => {
       },
     });
 
-    await ((wrapper.vm as any) as TestComponentInstance).createTodoMutation.mutateAsync('New Todo');
+    await (wrapper.vm as unknown as TestComponentInstance).createTodoMutation.mutateAsync('New Todo');
 
     expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey: ['todos'] });
   });

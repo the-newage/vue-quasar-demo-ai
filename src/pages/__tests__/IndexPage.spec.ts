@@ -34,11 +34,11 @@ describe('IndexPage', () => {
       isLoading: ref(false),
       error: ref(null),
       refetch,
-    } as any);
+    } as unknown as ReturnType<typeof useTodosQuery.useTodosQuery>);
 
     vi.mocked(useTodosQuery.useCreateTodoMutation).mockReturnValue({
       mutateAsync,
-    } as any);
+    } as unknown as ReturnType<typeof useTodosQuery.useCreateTodoMutation>);
 
     const wrapper = mount(IndexPage, {
       global: {

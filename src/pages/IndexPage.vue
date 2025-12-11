@@ -25,10 +25,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { Form, type SubmissionContext } from 'vee-validate';
+import { Form } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import BaseInput from '@/components/BaseInput.vue';
-import { todoSchema, type TodoFormValues } from '@/validation/schemas';
+import { todoSchema } from '@/validation/schemas';
 import { useTodosQuery, useCreateTodoMutation } from '@/queries/useTodosQuery';
 
 const { data, isLoading, error } = useTodosQuery();
@@ -41,11 +41,11 @@ const formError = ref<string | null>(null);
 
 const { t } = useI18n();
 
-async function onSubmit(values: any, context: SubmissionContext) {
+async function onSubmit(values: Record<string, unknown>) {
   formError.value = null;
   try {
-    await createTodo((values as { content: string }).content);
-    context.resetForm();
+    await createTodo(values.content as string);
+    // Form reset handled automatically by vee-validate
   } catch {
     formError.value = t('failedToAddTodo');
   }
