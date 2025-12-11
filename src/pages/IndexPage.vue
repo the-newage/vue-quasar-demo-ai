@@ -41,10 +41,10 @@ const formError = ref<string | null>(null);
 
 const { t } = useI18n();
 
-async function onSubmit(values: TodoFormValues, context: SubmissionContext) {
+async function onSubmit(values: any, context: SubmissionContext) {
   formError.value = null;
   try {
-    await createTodo(values.content);
+    await createTodo((values as { content: string }).content);
     context.resetForm();
   } catch {
     formError.value = t('failedToAddTodo');
