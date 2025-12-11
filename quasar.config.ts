@@ -2,6 +2,8 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
 import { defineConfig } from '#q-app/wrappers';
+import AutoImport from 'unplugin-auto-import/vite';
+import Components from 'unplugin-vue-components/vite';
 import { fileURLToPath } from 'node:url';
 
 export default defineConfig((ctx) => {
@@ -100,6 +102,32 @@ export default defineConfig((ctx) => {
             },
           },
           { server: false },
+        ],
+        [
+          AutoImport,
+          {
+            imports: [
+              'vue',
+              'vue-router',
+              'pinia',
+              {
+                '@tanstack/vue-query': [
+                  'useQuery',
+                  'useMutation',
+                  'useQueryClient',
+                ],
+              },
+            ],
+            dts: 'src/auto-imports.d.ts',
+            vueTemplate: true,
+          },
+        ],
+        [
+          Components,
+          {
+            dts: 'src/components.d.ts',
+            directoryAsNamespace: true,
+          },
         ],
       ],
     },
