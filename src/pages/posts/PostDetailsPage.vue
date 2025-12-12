@@ -37,6 +37,8 @@
 import { useRoute, useRouter } from 'vue-router';
 import { usePostQuery } from '@/queries/usePostsQuery';
 import { useDeletePostMutation } from '@/queries/usePostMutations';
+//import type { Post } from '@/types/models';
+//import type { AxiosResponse } from 'axios';
 
 const route = useRoute();
 const router = useRouter();
