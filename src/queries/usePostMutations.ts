@@ -19,7 +19,7 @@ export function useUpdatePostMutation() {
     mutationFn: updatePost,
     onSuccess: (data) => {
       void queryClient.invalidateQueries({ queryKey: ['posts'] });
-      queryClient.setQueryData(['posts', (data as Post).id], data);
+      queryClient.setQueryData(['posts', data.data.id], data.data);
     },
   });
 }
