@@ -21,12 +21,15 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <GlobalErrorDisplay />
   </q-layout>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue';
+import GlobalErrorDisplay from '@/components/GlobalErrorDisplay.vue';
 
 const linksList: EssentialLinkProps[] = [
   {
@@ -73,9 +76,9 @@ const linksList: EssentialLinkProps[] = [
   },
   {
     title: 'Posts',
-    caption: 'CRUD Posts',
+    caption: 'View and manage posts',
     icon: 'article',
-    link: '#/posts',
+    link: '/posts',
   },
 ];
 

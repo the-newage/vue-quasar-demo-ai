@@ -1,5 +1,5 @@
 import type { Post } from '@/types/models';
-import http from './http';
+import { http } from './http';
 
 export function fetchPosts() {
   return http.get<Post[]>('/posts');

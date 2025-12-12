@@ -18,6 +18,13 @@
         </div>
         <div v-if="formError" class="text-negative q-mt-sm">{{ formError }}</div>
       </Form>
+
+      <q-btn
+        color="negative"
+        label="Trigger Global Error"
+        @click="triggerError"
+        class="q-mt-xl"
+      />
     </div>
   </q-page>
 </template>
@@ -50,4 +57,8 @@ async function onSubmit(values: Record<string, unknown>) {
     formError.value = t('failedToAddTodo');
   }
 }
+
+const triggerError = () => {
+  throw new Error('This is a test error from the IndexPage.');
+};
 </script>

@@ -1,21 +1,20 @@
 <template>
-  <div>
-    <Field :name="name" v-slot="{ field, errorMessage }">
-      <q-input
-        v-model="field.value"
-        :label="label"
-        :error-message="errorMessage"
-        :error="!!errorMessage"
-      />
-    </Field>
-  </div>
+  <q-input
+    v-model="model"
+    :label="label"
+    :rules="rules"
+    outlined
+    class="q-mb-md"
+  />
 </template>
 
 <script setup lang="ts">
-import { Field } from 'vee-validate';
+import type { QInputProps } from 'quasar';
 
 defineProps<{
-  name: string;
   label: string;
+  rules?: QInputProps['rules'];
 }>();
+
+const model = defineModel<string>();
 </script>

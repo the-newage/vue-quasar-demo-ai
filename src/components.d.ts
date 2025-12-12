@@ -13,6 +13,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     BaseInput: typeof import('./components/BaseInput.vue')['default']
     EssentialLink: typeof import('./components/EssentialLink.vue')['default']
+    GlobalErrorDisplay: typeof import('./components/GlobalErrorDisplay.vue')['default']
+    PostForm: typeof import('./components/PostForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

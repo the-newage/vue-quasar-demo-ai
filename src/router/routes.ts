@@ -20,6 +20,38 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/LoginPage.vue'),
   },
 
+  {
+    path: '/posts',
+    component: () => import('@/layouts/PostsLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'posts',
+        component: () => import('@/pages/posts/PostsPage.vue'),
+      },
+      {
+        path: 'create',
+        name: 'createPost',
+        component: () => import('@/pages/posts/CreatePostPage.vue'),
+      },
+      {
+        path: ':id',
+        name: 'postDetails',
+        component: () => import('@/pages/posts/PostDetailsPage.vue'),
+      },
+      {
+        path: ':id/edit',
+        name: 'editPost',
+        component: () => import('@/pages/posts/EditPostPage.vue'),
+      },
+      {
+        path: ':id/comments',
+        name: 'postComments',
+        component: () => import('@/pages/posts/PostCommentsPage.vue'),
+      },
+    ],
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {
