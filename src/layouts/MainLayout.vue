@@ -71,6 +71,12 @@ const linksList: EssentialLinkProps[] = [
     icon: 'favorite',
     link: 'https://awesome.quasar.dev',
   },
+  {
+    title: 'Posts',
+    caption: 'CRUD Posts',
+    icon: 'article',
+    link: '#/posts',
+  },
 ];
 
 const leftDrawerOpen = ref(false);
