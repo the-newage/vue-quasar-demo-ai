@@ -9,13 +9,13 @@
 import { useRouter } from 'vue-router';
 import PostForm from '@/components/PostForm.vue';
 import { useCreatePostMutation } from '@/queries/usePostMutations';
-import type { Post } from '@/types/models';
+import type { PostFormValues } from '@/validation/schemas';
 
 const router = useRouter();
 const { mutate: createPost } = useCreatePostMutation();
 
-const handleSubmit = (post: Omit<Post, 'id'>) => {
-  createPost(post, {
+const handleSubmit = (values: PostFormValues) => {
+  createPost({ ...values, userId: 1 }, {
     onSuccess: () => {
       void router.push('/posts');
     },

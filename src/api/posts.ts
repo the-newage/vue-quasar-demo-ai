@@ -9,8 +9,9 @@ export function fetchPost(id: number) {
   return http.get<Post>(`/posts/${id}`);
 }
 
-export function createPost(post: Omit<Post, 'id'>) {
-  return http.post<Post>('/posts', post);
+export async function createPost(post: Omit<Post, 'id'>): Promise<Post> {
+  const response = await http.post<Post>('/posts', post);
+  return response.data;
 }
 
 export function updatePost(post: Post) {

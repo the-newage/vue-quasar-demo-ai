@@ -1,28 +1,41 @@
+import { http } from './http';
 import type { Todo } from '@/types/models';
 
-let todos: Todo[] = [
-  { id: 1, content: 'Learn Quasar' },
-  { id: 2, content: 'Learn Vue' },
-  { id: 3, content: 'Learn TypeScript' },
-];
+interface JsonPlaceholderTodo {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
+const LOCAL_STORAGE_KEY = 'todos';
+
+function getLocalTodos(): Todo[] {
+  const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
+  return localData ? JSON.parse(localData) as Todo[] : [];
+}
+
+function saveLocalTodos(todos: Todo[]): void {
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos));
+}
 
 export async function getTodos(): Promise<Todo[]> {
-  // Simulate a network delay
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  return Promise.resolve(todos);
+  const localTodos = getLocalTodos();
+  const { data } = await http.get<JsonPlaceholderTodo[]>('/todos');
+  const apiTodos = data.slice(0, 10).map((todo) => ({
+    id: todo.id,
+    content: todo.title,
+  }));
+  return [...localTodos, ...apiTodos];
 }
 
 export async function createTodo(content: string): Promise<Todo> {
-  try {
-    // Simulate a network delay
-    await new Promise(resolve => setTimeout(resolve, 500));
-    const newTodo: Todo = {
-      id: todos.length + 1,
-      content,
-    };
-    todos = [...todos, newTodo];
-    return Promise.resolve(newTodo);
-  } catch {
-    return Promise.reject(new Error('Failed to create todo'));
-  }
+  const localTodos = getLocalTodos();
+  const newTodo: Todo = {
+    id: Date.now(), // Simple unique ID
+    content,
+  };
+  const updatedTodos = [newTodo, ...localTodos];
+  saveLocalTodos(updatedTodos);
+  return Promise.resolve(newTodo);
 }

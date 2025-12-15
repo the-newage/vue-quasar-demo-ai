@@ -14,8 +14,11 @@ export function useCreateTodoMutation() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (content: string) => createTodo(content),
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: ['todos'] });
+    onSuccess: (newTodo: Todo) => {
+      queryClient.setQueryData<Todo[]>(['todos'], (oldTodos) => {
+        if (!oldTodos) return [newTodo];
+        return [newTodo, ...oldTodos];
+      });
     },
   });
 }

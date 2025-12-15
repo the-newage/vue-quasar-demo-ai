@@ -1,55 +1,66 @@
 <template>
-  <q-form @submit.prevent="handleSubmit">
-    <BaseInput
-      v-model="editablePost.title"
-      label="Title"
-      :rules="[(val) => !!val || 'Title is required']"
-    />
+  <Form
+    :validation-schema="validationSchema"
+    :initial-values="initialValues"
+    v-slot="{ isSubmitting }"
+    @submit="onSubmit"
+    class="q-gutter-md"
+  >
+    <BaseInput name="title" label="Title" />
 
-    <q-input
-      v-model="editablePost.body"
-      label="Body"
-      type="textarea"
-      :rules="[(val) => !!val || 'Body is required']"
-      outlined
-      class="q-mt-md"
-    />
+    <Field v-slot="{ field, errorMessage }" name="body">
+      <q-input
+        v-model="field.value"
+        label="Body"
+        type="textarea"
+        :error-message="errorMessage"
+        :error="!!errorMessage"
+        outlined
+        @update:model-value="field.onChange"
+        @blur="field.onBlur"
+      />
+    </Field>
 
     <div class="q-mt-md">
-      <q-btn type="submit" color="primary" label="Submit" />
+      <q-btn type="submit" color="primary" label="Submit" :loading="isSubmitting" />
       <q-btn flat label="Cancel" @click="$emit('cancel')" class="q-ml-sm" />
     </div>
-  </q-form>
+  </Form>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { computed } from 'vue';
+import { Form, Field } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/zod';
 import type { Post } from '@/types/models';
 import BaseInput from '@/components/BaseInput.vue';
+import { postSchema, type PostFormValues } from '@/validation/schemas';
 
 const props = defineProps<{
   post?: Post;
 }>();
 
-const emit = defineEmits(['submit', 'cancel']);
+const emit = defineEmits<{
+  (e: 'submit', values: PostFormValues): void;
+  (e: 'cancel'): void;
+}>();
 
-const editablePost = ref<Omit<Post, 'id' | 'userId'> & { userId?: number }>({
-  title: '',
-  body: '',
-  userId: 1, // Default user ID for new posts
+const validationSchema = toTypedSchema(postSchema);
+
+const initialValues = computed(() => {
+  if (props.post) {
+    return {
+      title: props.post.title,
+      body: props.post.body,
+    };
+  }
+  return {
+    title: '',
+    body: '',
+  };
 });
 
-watch(
-  () => props.post,
-  (newPost) => {
-    if (newPost) {
-      editablePost.value = { ...newPost };
-    }
-  },
-  { immediate: true }
-);
-
-const handleSubmit = () => {
-  emit('submit', editablePost.value);
+const onSubmit = (values: Record<string, unknown>) => {
+  emit('submit', values as PostFormValues);
 };
 </script>
