@@ -16,7 +16,7 @@ import { useRoute, useRouter } from 'vue-router';
 import PostForm from '@/components/PostForm.vue';
 import { usePostQuery } from '@/queries/usePostsQuery';
 import { useUpdatePostMutation } from '@/queries/usePostMutations';
-import type { Post } from '@/types/models';
+import type { PostFormValues } from '@/validation/schemas';
 
 const route = useRoute();
 const router = useRouter();
@@ -25,8 +25,9 @@ const postId = Number(route.params.id);
 const { data: post, isLoading, isError } = usePostQuery(postId);
 const { mutate: updatePost } = useUpdatePostMutation();
 
-const handleSubmit = (post: Post) => {
-  updatePost(post, {
+const handleSubmit = (values: PostFormValues) => {
+  if (!post.value) return;
+  updatePost({ ...post.value, ...values }, {
     onSuccess: () => {
       void router.push(`/posts/${postId}`);
     },

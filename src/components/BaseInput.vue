@@ -1,20 +1,24 @@
 <template>
   <q-input
-    v-model="model"
+    v-model="value"
     :label="label"
-    :rules="rules"
+    :error-message="errorMessage"
+    :error="!!errorMessage"
     outlined
     class="q-mb-md"
+    @blur="handleBlur"
   />
 </template>
 
 <script setup lang="ts">
-import type { QInputProps } from 'quasar';
+import { useField } from 'vee-validate';
 
-defineProps<{
+const props = defineProps<{
+  name: string;
   label: string;
-  rules?: QInputProps['rules'];
 }>();
 
-const model = defineModel<string>();
+const { value, errorMessage, handleBlur } = useField<string>(
+  () => props.name
+);
 </script>
