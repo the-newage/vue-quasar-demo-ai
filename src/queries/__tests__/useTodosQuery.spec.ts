@@ -3,6 +3,7 @@ import { useTodosQuery, useCreateTodoMutation } from '../useTodosQuery';
 import * as todosApi from '@/api/todos';
 import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query';
 import { mount } from '@vue/test-utils';
+import type { Todo } from '@/types/models';
 
 vi.mock('@/api/todos');
 
@@ -62,8 +63,8 @@ describe('useCreateTodoMutation', () => {
     expect(setQueryDataSpy).toHaveBeenCalledWith(['todos'], expect.any(Function));
 
     // Verify the update function adds the new todo
-    const updateFn = setQueryDataSpy.mock.calls[0][1] as (oldData: any[]) => any[];
-    const oldData = [{ id: 2, content: 'Old Todo' }];
+    const updateFn = setQueryDataSpy.mock.calls[0]![1] as (oldData: Todo[]) => Todo[];
+    const oldData: Todo[] = [{ id: 2, content: 'Old Todo' }];
     const newData = updateFn(oldData);
     expect(newData).toEqual([mockTodo, ...oldData]);
   });
