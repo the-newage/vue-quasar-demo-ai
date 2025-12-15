@@ -40,10 +40,16 @@ describe('useTodosQuery', () => {
 });
 
 describe('useCreateTodoMutation', () => {
-  it('creates a todo and invalidates the todos query', async () => {
+  it('creates a todo and updates the todos query cache', async () => {
     const mockTodo = { id: 1, content: 'New Todo' };
     vi.spyOn(todosApi, 'createTodo').mockResolvedValue(mockTodo);
-    const invalidateQueriesSpy = vi.spyOn(queryClient, 'invalidateQueries');
+    const setQueryDataSpy = vi.spyOn(queryClient, 'setQueryData');
+
+    // Set initial data for the query
+    queryClient.setQueryData(['todos'], []);
+
+    // Clear the spy history before mounting the component
+    setQueryDataSpy.mockClear();
 
     const wrapper = mount(TestComponent, {
       global: {
@@ -53,6 +59,12 @@ describe('useCreateTodoMutation', () => {
 
     await (wrapper.vm as unknown as TestComponentInstance).createTodoMutation.mutateAsync('New Todo');
 
-    expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey: ['todos'] });
+    expect(setQueryDataSpy).toHaveBeenCalledWith(['todos'], expect.any(Function));
+
+    // Verify the update function adds the new todo
+    const updateFn = setQueryDataSpy.mock.calls[0][1] as (oldData: any[]) => any[];
+    const oldData = [{ id: 2, content: 'Old Todo' }];
+    const newData = updateFn(oldData);
+    expect(newData).toEqual([mockTodo, ...oldData]);
   });
 });
