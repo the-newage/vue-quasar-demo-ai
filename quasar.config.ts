@@ -2,6 +2,8 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
 import { defineConfig } from '#q-app/wrappers';
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite';
+import checker from 'vite-plugin-checker';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { fileURLToPath } from 'node:url';
@@ -76,7 +78,7 @@ export default defineConfig((ctx) => {
 
       vitePlugins: [
         [
-          '@intlify/unplugin-vue-i18n/vite',
+          VueI18nPlugin,
           {
             ssr: ctx.modeName === 'ssr',
             include: [fileURLToPath(new URL('./src/i18n', import.meta.url))],
@@ -84,7 +86,7 @@ export default defineConfig((ctx) => {
         ],
 
         [
-          'vite-plugin-checker',
+          checker,
           {
             vueTsc: true,
             eslint: {
