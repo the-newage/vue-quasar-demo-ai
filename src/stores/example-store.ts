@@ -1,19 +1,19 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
+import { ref, computed } from 'vue';
 
-export const useCounterStore = defineStore('counter', {
-  state: () => ({
-    counter: 0,
-  }),
+export const useCounterStore = defineStore('counter', () => {
+  const counter = ref(0);
+  const doubleCount = computed(() => counter.value * 2);
 
-  getters: {
-    doubleCount: (state) => state.counter * 2,
-  },
+  function increment() {
+    counter.value++;
+  }
 
-  actions: {
-    increment() {
-      this.counter++;
-    },
-  },
+  return {
+    counter,
+    doubleCount,
+    increment,
+  };
 });
 
 if (import.meta.hot) {

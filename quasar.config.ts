@@ -50,10 +50,21 @@ export default defineConfig((ctx) => {
         strict: true,
         vueShim: true,
         extendTsConfig(tsConfig) {
-          tsConfig.compilerOptions = tsConfig.compilerOptions || {};
-          tsConfig.compilerOptions.types = tsConfig.compilerOptions.types || [];
-          tsConfig.compilerOptions.types.push('vitest/globals');
-          tsConfig.compilerOptions.types.push('@vue/test-utils');
+          tsConfig.compilerOptions = {
+            ...tsConfig.compilerOptions,
+            noImplicitAny: true,
+            strictNullChecks: true,
+            strictFunctionTypes: true,
+            strictBindCallApply: true,
+            strictPropertyInitialization: true,
+            noImplicitThis: true,
+            alwaysStrict: true,
+            noUnusedLocals: true,
+            noUnusedParameters: true,
+            noImplicitReturns: true,
+            noFallthroughCasesInSwitch: true,
+            types: ['vitest/globals', '@vue/test-utils'],
+          };
         },
       },
 

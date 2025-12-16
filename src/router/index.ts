@@ -35,13 +35,24 @@ export default defineRouter(function (/* { store, ssrContext } */) {
   });
 
   Router.beforeEach((to, from, next) => {
-    const auth = useAuthStore();
+    const authStore = useAuthStore();
 
-    if (to.meta.requiresAuth && !auth.isAuthenticated) {
-      return next({ name: 'login', query: { redirect: to.fullPath } });
+    if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+      next({ name: 'login', query: { redirect: to.fullPath } });
+    } else if (to.name === 'login' && authStore.isAuthenticated) {
+      next({ name: 'home' });
+    } else {
+      next();
     }
+  });
 
-    next();
+  Router.afterEach((to) => {
+    const appName = 'Vue Quasar Demo';
+    if (to.meta.title) {
+      document.title = `${to.meta.title} - ${appName}`;
+    } else {
+      document.title = appName;
+    }
   });
 
   return Router;

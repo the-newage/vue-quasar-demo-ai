@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import { useAuthStore } from '@/stores/auth';
+import { useErrorStore } from '@/stores/error';
 
 export const http = axios.create({
   baseURL: 'https://jsonplaceholder.typicode.com',
@@ -7,6 +7,7 @@ export const http = axios.create({
 });
 
 http.interceptors.request.use((config) => {
+  // In a real app, you'd get the token from your auth store
   // const auth = useAuthStore();
   // if (auth.token) {
   //   config.headers = config.headers ?? {};
@@ -18,10 +19,18 @@ http.interceptors.request.use((config) => {
 http.interceptors.response.use(
   (response) => response,
   (error) => {
+    const errorStore = useErrorStore();
+    const errorMessage =
+      error.response?.data?.message || error.message || 'An unknown error occurred';
+    errorStore.setError(errorMessage);
+
+    // Example of handling specific error codes
     if (error.response?.status === 419) {
+      // In a real app, you might want to logout the user
       // const auth = useAuthStore();
       // auth.logout();
     }
-    return Promise.reject(new Error(error.message));
+
+    return Promise.reject(error);
   },
 );
