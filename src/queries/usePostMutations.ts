@@ -26,12 +26,19 @@ export function useUpdatePostMutation() {
   });
 }
 
+import { useErrorStore } from '@/stores/error';
+
 export function useDeletePostMutation() {
   const queryClient = useQueryClient();
+  const errorStore = useErrorStore();
+
   return useMutation({
     mutationFn: deletePost,
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['posts'] });
+    },
+    onError: (error) => {
+      errorStore.setError(error.message || 'Failed to delete post');
     },
   });
 }
