@@ -7,7 +7,7 @@ export function usePostsQuery(
   options?: Omit<
     UseQueryOptions<AxiosResponse<Post[]>, Error, Post[]>,
     'queryKey' | 'queryFn' | 'select'
-  >
+  >,
 ) {
   return useQuery({
     queryKey: ['posts'],
@@ -22,7 +22,7 @@ export function usePostQuery(
   options?: Omit<
     UseQueryOptions<AxiosResponse<Post>, Error, Post>,
     'queryKey' | 'queryFn' | 'select'
-  >
+  >,
 ) {
   return useQuery({
     queryKey: ['posts', id],

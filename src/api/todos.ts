@@ -12,7 +12,7 @@ const LOCAL_STORAGE_KEY = 'todos';
 
 function getLocalTodos(): Todo[] {
   const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
-  return localData ? JSON.parse(localData) as Todo[] : [];
+  return localData ? (JSON.parse(localData) as Todo[]) : [];
 }
 
 function saveLocalTodos(todos: Todo[]): void {

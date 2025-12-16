@@ -39,12 +39,7 @@
           </q-form>
         </q-card-section>
         <q-card-actions>
-          <q-btn
-            flat
-            :label="$t('logout')"
-            color="primary"
-            @click="handleLogout"
-          />
+          <q-btn flat :label="$t('logout')" color="primary" @click="handleLogout" />
         </q-card-actions>
       </q-card>
     </div>

@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
-import PostForm from '@/components/PostForm.vue';
+import PostForm from '@/components/form/PostForm.vue';
 import { usePostQuery } from '@/queries/usePostsQuery';
 import { useUpdatePostMutation } from '@/queries/usePostMutations';
 import type { PostFormValues } from '@/validation/schemas';
@@ -27,11 +27,14 @@ const { mutate: updatePost } = useUpdatePostMutation();
 
 const handleSubmit = (values: PostFormValues) => {
   if (!post.value) return;
-  updatePost({ ...post.value, ...values }, {
-    onSuccess: () => {
-      void router.push(`/posts/${postId}`);
+  updatePost(
+    { ...post.value, ...values },
+    {
+      onSuccess: () => {
+        void router.push(`/posts/${postId}`);
+      },
     },
-  });
+  );
 };
 
 const handleCancel = () => {

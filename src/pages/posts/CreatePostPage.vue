@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import PostForm from '@/components/PostForm.vue';
+import PostForm from '@/components/form/PostForm.vue';
 import { useCreatePostMutation } from '@/queries/usePostMutations';
 import type { PostFormValues } from '@/validation/schemas';
 
@@ -15,11 +15,14 @@ const router = useRouter();
 const { mutate: createPost } = useCreatePostMutation();
 
 const handleSubmit = (values: PostFormValues) => {
-  createPost({ ...values, userId: 1 }, {
-    onSuccess: () => {
-      void router.push('/posts');
+  createPost(
+    { ...values, userId: 1 },
+    {
+      onSuccess: () => {
+        void router.push('/posts');
+      },
     },
-  });
+  );
 };
 
 const handleCancel = () => {

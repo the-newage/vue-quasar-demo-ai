@@ -49,12 +49,12 @@ export default defineConfig((ctx) => {
       typescript: {
         strict: true,
         vueShim: true,
-        extendTsConfig (tsConfig) {
+        extendTsConfig(tsConfig) {
           tsConfig.compilerOptions = tsConfig.compilerOptions || {};
           tsConfig.compilerOptions.types = tsConfig.compilerOptions.types || [];
           tsConfig.compilerOptions.types.push('vitest/globals');
           tsConfig.compilerOptions.types.push('@vue/test-utils');
-        }
+        },
       },
 
       vueRouterMode: 'hash', // available values: 'hash', 'history'
@@ -104,11 +104,7 @@ export default defineConfig((ctx) => {
               'vue-router',
               'pinia',
               {
-                '@tanstack/vue-query': [
-                  'useQuery',
-                  'useMutation',
-                  'useQueryClient',
-                ],
+                '@tanstack/vue-query': ['useQuery', 'useMutation', 'useQueryClient'],
               },
             ],
             dts: 'src/auto-imports.d.ts',
@@ -133,7 +129,9 @@ export default defineConfig((ctx) => {
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#framework
     framework: {
-      config: {},
+      config: {
+        dark: 'auto',
+      },
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack

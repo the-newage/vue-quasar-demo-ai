@@ -9,8 +9,7 @@ export default boot(({ app }) => {
     console.error('Error info:', info);
 
     const errorStore = useErrorStore();
-    const message =
-      err instanceof Error ? err.message : 'An unknown error occurred.';
+    const message = err instanceof Error ? err.message : 'An unknown error occurred.';
     errorStore.setError(`A component failed to render. Details: ${message}`);
   };
 });

@@ -23,5 +23,5 @@ http.interceptors.response.use(
       // auth.logout();
     }
     return Promise.reject(new Error(error.message));
-  }
+  },
 );

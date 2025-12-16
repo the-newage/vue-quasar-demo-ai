@@ -19,12 +19,7 @@
         <div v-if="formError" class="text-negative q-mt-sm">{{ formError }}</div>
       </Form>
 
-      <q-btn
-        color="negative"
-        label="Trigger Global Error"
-        @click="triggerError"
-        class="q-mt-xl"
-      />
+      <q-btn color="negative" label="Trigger Global Error" @click="triggerError" class="q-mt-xl" />
     </div>
   </q-page>
 </template>
@@ -34,7 +29,7 @@ import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { Form } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
-import BaseInput from '@/components/BaseInput.vue';
+import BaseInput from '@/components/form/BaseInput.vue';
 import { todoSchema } from '@/validation/schemas';
 import { useTodosQuery, useCreateTodoMutation } from '@/queries/useTodosQuery';
 

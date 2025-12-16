@@ -36,7 +36,9 @@ describe('useTodosQuery', () => {
 
     await (wrapper.vm as unknown as TestComponentInstance).todosQuery.refetch();
 
-    expect((wrapper.vm as unknown as TestComponentInstance).todosQuery.data.value).toEqual(mockTodos);
+    expect((wrapper.vm as unknown as TestComponentInstance).todosQuery.data.value).toEqual(
+      mockTodos,
+    );
   });
 });
 
@@ -58,7 +60,9 @@ describe('useCreateTodoMutation', () => {
       },
     });
 
-    await (wrapper.vm as unknown as TestComponentInstance).createTodoMutation.mutateAsync('New Todo');
+    await (wrapper.vm as unknown as TestComponentInstance).createTodoMutation.mutateAsync(
+      'New Todo',
+    );
 
     expect(setQueryDataSpy).toHaveBeenCalledWith(['todos'], expect.any(Function));
 

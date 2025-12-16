@@ -6,6 +6,14 @@
 
         <q-toolbar-title> Quasar App </q-toolbar-title>
 
+        <q-toggle
+          :model-value="$q.dark.isActive"
+          @update:model-value="$q.dark.toggle()"
+          checked-icon="dark_mode"
+          unchecked-icon="light_mode"
+          size="lg"
+        />
+
         <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
@@ -28,8 +36,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue';
-import GlobalErrorDisplay from '@/components/GlobalErrorDisplay.vue';
+import EssentialLink, { type EssentialLinkProps } from 'components/ui/EssentialLink.vue';
+import GlobalErrorDisplay from '@/components/ui/GlobalErrorDisplay.vue';
 
 const linksList: EssentialLinkProps[] = [
   {

@@ -33,7 +33,7 @@ import { computed } from 'vue';
 import { Form, Field } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import type { Post } from '@/types/models';
-import BaseInput from '@/components/BaseInput.vue';
+import BaseInput from '@/components/form/BaseInput.vue';
 import { postSchema, type PostFormValues } from '@/validation/schemas';
 
 const props = defineProps<{

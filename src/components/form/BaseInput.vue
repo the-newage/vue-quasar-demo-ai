@@ -18,7 +18,5 @@ const props = defineProps<{
   label: string;
 }>();
 
-const { value, errorMessage, handleBlur } = useField<string>(
-  () => props.name
-);
+const { value, errorMessage, handleBlur } = useField<string>(() => props.name);
 </script>

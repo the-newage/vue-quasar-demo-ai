@@ -4,12 +4,7 @@
       <div class="row items-center q-mb-md">
         <h1 class="text-h4 q-ma-none">{{ post.title }}</h1>
         <q-space />
-        <q-btn
-          color="primary"
-          label="Edit Post"
-          :to="`/posts/${post.id}/edit`"
-          class="q-mr-sm"
-        />
+        <q-btn color="primary" label="Edit Post" :to="`/posts/${post.id}/edit`" class="q-mr-sm" />
         <q-btn color="negative" label="Delete Post" @click="handleDelete" />
       </div>
 

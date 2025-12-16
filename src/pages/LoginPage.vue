@@ -6,12 +6,7 @@
         <q-card-section>
           <Form @submit="onSubmit" :validation-schema="validationSchema" v-slot="{ isSubmitting }">
             <div class="q-gutter-md">
-              <BaseInput
-                name="email"
-                :label="$t('email')"
-                type="email"
-                autocomplete="email"
-              />
+              <BaseInput name="email" :label="$t('email')" type="email" autocomplete="email" />
               <BaseInput
                 name="password"
                 :label="$t('password')"
@@ -45,7 +40,7 @@ import { useI18n } from 'vue-i18n';
 import { Form } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { z } from 'zod';
-import BaseInput from '@/components/BaseInput.vue';
+import BaseInput from '@/components/form/BaseInput.vue';
 import { useAuthStore } from '@/stores/auth';
 
 const authStore = useAuthStore();
@@ -64,11 +59,11 @@ const validationSchema = toTypedSchema(loginSchema);
 
 function onSubmit(values: Record<string, unknown>) {
   loginError.value = null;
-  
+
   try {
     // Mock login - replace with actual authentication
     authStore.login(values.email as string);
-    
+
     // Redirect to the originally requested page or home
     const redirect = route.query.redirect as string;
     void router.push(redirect || { name: 'home' });

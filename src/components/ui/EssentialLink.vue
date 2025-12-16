@@ -35,6 +35,10 @@ const props = withDefaults(defineProps<EssentialLinkProps>(), {
 
 const isExternalLink = computed(() => {
   if (!props.link) return false;
-  return props.link.startsWith('http') || props.link.startsWith('mailto:') || props.link.startsWith('tel:');
+  return (
+    props.link.startsWith('http') ||
+    props.link.startsWith('mailto:') ||
+    props.link.startsWith('tel:')
+  );
 });
 </script>
