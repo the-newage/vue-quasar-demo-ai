@@ -1,23 +1,50 @@
 import type { Post } from '@/types/models';
 import { http } from './http';
 
-export function fetchPosts() {
-  return http.get<Post[]>('/posts');
+/**
+ * Fetches a list of all posts.
+ * @returns {Promise<Post[]>} A promise that resolves to an array of posts.
+ */
+export async function fetchPosts(): Promise<Post[]> {
+  const response = await http.get<Post[]>('/posts');
+  return response.data;
 }
 
-export function fetchPost(id: number) {
-  return http.get<Post>(`/posts/${id}`);
+/**
+ * Fetches a single post by its ID.
+ * @param {number} id - The ID of the post to fetch.
+ * @returns {Promise<Post>} A promise that resolves to the post object.
+ */
+export async function fetchPost(id: number): Promise<Post> {
+  const response = await http.get<Post>(`/posts/${id}`);
+  return response.data;
 }
 
+/**
+ * Creates a new post.
+ * @param {Omit<Post, 'id'>} post - The post object to create, without the ID.
+ * @returns {Promise<Post>} A promise that resolves to the newly created post object.
+ */
 export async function createPost(post: Omit<Post, 'id'>): Promise<Post> {
   const response = await http.post<Post>('/posts', post);
   return response.data;
 }
 
-export function updatePost(post: Post) {
-  return http.put<Post>(`/posts/${post.id}`, post);
+/**
+ * Updates an existing post.
+ * @param {Post} post - The post object to update.
+ * @returns {Promise<Post>} A promise that resolves to the updated post object.
+ */
+export async function updatePost(post: Post): Promise<Post> {
+  const response = await http.put<Post>(`/posts/${post.id}`, post);
+  return response.data;
 }
 
-export function deletePost(id: number) {
-  return http.delete(`/posts/${id}`);
+/**
+ * Deletes a post by its ID.
+ * @param {number} id - The ID of the post to delete.
+ * @returns {Promise<void>} A promise that resolves when the post is deleted.
+ */
+export async function deletePost(id: number): Promise<void> {
+  await http.delete(`/posts/${id}`);
 }

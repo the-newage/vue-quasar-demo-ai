@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query';
 import { getProfile, updateProfile } from '@/api/profile';
-import type { User } from '@/types/user';
+import type { User } from '@/types/models';
 
 export const useProfileQuery = () => {
   const queryClient = useQueryClient();

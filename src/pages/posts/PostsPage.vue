@@ -6,27 +6,56 @@
       <q-btn color="primary" label="Create Post" to="/posts/create" />
     </div>
 
+    <q-linear-progress v-if="isLoading" indeterminate color="primary" />
+
+    <q-banner v-if="isError" class="bg-red-2 text-red-9 q-mb-md">
+      <template v-slot:avatar>
+        <q-icon name="error" />
+      </template>
+      {{ error?.message || 'An unknown error occurred' }}
+      <template v-slot:action>
+        <q-btn flat color="red-9" label="Retry" @click="() => refetch()" />
+      </template>
+    </q-banner>
+
     <q-list v-if="posts" bordered separator>
-      <q-item v-for="post in posts" :key="post.id" clickable :to="`/posts/${post.id}`">
+      <q-item
+        v-for="post in posts"
+        :key="post.id"
+        clickable
+        :to="`/posts/${post.id}`"
+      >
         <q-item-section>
           <q-item-label class="text-h6">{{ post.title }}</q-item-label>
           <q-item-label caption>{{ post.body.substring(0, 100) }}...</q-item-label>
         </q-item-section>
+        <q-item-section side>
+          <q-btn
+            icon="delete"
+            color="negative"
+            flat
+            round
+            @click.stop.prevent="handleDelete(post.id)"
+            :loading="deletePostMutation.isPending.value"
+          />
+        </q-item-section>
       </q-item>
     </q-list>
-
-    <div v-else-if="isLoading" class="text-center">
-      <q-spinner-dots color="primary" size="40px" />
-    </div>
-
-    <div v-else-if="isError" class="text-center text-negative">
-      <p>Error loading posts.</p>
-    </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
 import { usePostsQuery } from '@/queries/usePostsQuery';
+import { useDeletePostMutation } from '@/queries/usePostMutations';
+import { useDialog } from '@/composables/useDialog';
 
-const { data: posts, isLoading, isError } = usePostsQuery();
+const { data: posts, isLoading, isError, error, refetch } = usePostsQuery();
+const deletePostMutation = useDeletePostMutation();
+const { showConfirmation } = useDialog();
+
+const handleDelete = (id: number) => {
+  showConfirmation('Are you sure you want to delete this post?', () => {
+    deletePostMutation.mutate(id);
+  });
+};
 </script>

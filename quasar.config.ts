@@ -16,7 +16,7 @@ export default defineConfig((ctx) => {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['i18n', 'axios', 'vue-query', 'vee-validate', 'errorHandler'],
+    boot: ['i18n', 'axios', 'vue-query', 'vee-validate', 'errorHandler', 'env'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
     css: ['app.scss'],
@@ -50,10 +50,21 @@ export default defineConfig((ctx) => {
         strict: true,
         vueShim: true,
         extendTsConfig(tsConfig) {
-          tsConfig.compilerOptions = tsConfig.compilerOptions || {};
-          tsConfig.compilerOptions.types = tsConfig.compilerOptions.types || [];
-          tsConfig.compilerOptions.types.push('vitest/globals');
-          tsConfig.compilerOptions.types.push('@vue/test-utils');
+          tsConfig.compilerOptions = {
+            ...tsConfig.compilerOptions,
+            noImplicitAny: true,
+            strictNullChecks: true,
+            strictFunctionTypes: true,
+            strictBindCallApply: true,
+            strictPropertyInitialization: true,
+            noImplicitThis: true,
+            alwaysStrict: true,
+            noUnusedLocals: true,
+            noUnusedParameters: true,
+            noImplicitReturns: true,
+            noFallthroughCasesInSwitch: true,
+            types: ['vitest/globals', '@vue/test-utils'],
+          };
         },
       },
 
