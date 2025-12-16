@@ -53,9 +53,12 @@ const { data: posts, isLoading, isError, error, refetch } = usePostsQuery();
 const deletePostMutation = useDeletePostMutation();
 const { showConfirmation } = useDialog();
 
-const handleDelete = (id: number) => {
-  showConfirmation('Are you sure you want to delete this post?', () => {
+const handleDelete = async (id: number) => {
+  try {
+    await showConfirmation('Are you sure you want to delete this post?');
     deletePostMutation.mutate(id);
-  });
+  } catch {
+    // User cancelled the dialog. Do nothing.
+  }
 };
 </script>
