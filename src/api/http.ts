@@ -31,6 +31,6 @@ http.interceptors.response.use(
       // auth.logout();
     }
 
-    return Promise.reject(error);
+    return Promise.reject(new Error(errorMessage));
   },
 );
