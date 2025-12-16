@@ -1,8 +1,20 @@
 <template>
   <q-page class="q-pa-md">
-    <h2 class="text-h5">Comments for Post #{{ postId }}</h2>
+    <h1 class="text-h4 q-ma-none q-mb-md">Comments for Post #{{ postId }}</h1>
 
-    <q-list v-if="comments" bordered separator>
+    <q-linear-progress v-if="isLoading" indeterminate color="primary" />
+
+    <q-banner v-else-if="isError" class="bg-red-2 text-red-9 q-mb-md">
+      <template v-slot:avatar>
+        <q-icon name="error" />
+      </template>
+      {{ error?.message || 'An unknown error occurred' }}
+      <template v-slot:action>
+        <q-btn flat color="red-9" label="Retry" @click="() => refetch()" />
+      </template>
+    </q-banner>
+
+    <q-list v-else-if="comments" bordered separator>
       <q-item v-for="comment in comments" :key="comment.id">
         <q-item-section>
           <q-item-label class="text-weight-bold">{{ comment.name }}</q-item-label>
@@ -12,15 +24,17 @@
       </q-item>
     </q-list>
 
-    <div v-else-if="isLoading" class="text-center">
-      <q-spinner-dots color="primary" size="40px" />
+    <div v-else>
+      <p>No comments found for this post.</p>
     </div>
 
-    <div v-else-if="isError" class="text-center text-negative">
-      <p>Error loading comments.</p>
-    </div>
-
-    <q-btn flat label="Back to Post" @click="$router.back()" class="q-mt-md" />
+    <q-btn
+      flat
+      label="Back to Post"
+      @click="$router.back()"
+      class="q-mt-md"
+      icon="arrow_back"
+    />
   </q-page>
 </template>
 
@@ -31,5 +45,11 @@ import { useCommentsQuery } from '@/queries/useCommentsQuery';
 const route = useRoute();
 const postId = Number(route.params.id);
 
-const { data: comments, isLoading, isError } = useCommentsQuery(postId);
+const {
+  data: comments,
+  isLoading,
+  isError,
+  error,
+  refetch,
+} = useCommentsQuery(postId);
 </script>
