@@ -1,5 +1,6 @@
 import { defineBoot } from '#q-app/wrappers';
 import axios, { type AxiosInstance } from 'axios';
+
 import { http } from '@/api/http';
 
 declare module 'vue' {
