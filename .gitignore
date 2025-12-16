@@ -31,6 +31,7 @@ npm_output.log
 *.sln
 
 # local .env files
+.env
 .env.local*
 
 # Logs

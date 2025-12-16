@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useErrorStore } from '@/stores/error';
 
 export const http = axios.create({
-  baseURL: 'https://jsonplaceholder.typicode.com',
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   withCredentials: true,
 });
 
