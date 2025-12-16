@@ -19,9 +19,9 @@ export function useUpdatePostMutation() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updatePost,
-    onSuccess: (data) => {
+    onSuccess: (updatedPost) => {
       void queryClient.invalidateQueries({ queryKey: ['posts'] });
-      queryClient.setQueryData(['posts', data.data.id], data.data);
+      queryClient.setQueryData(['posts', updatedPost.id], updatedPost);
     },
   });
 }

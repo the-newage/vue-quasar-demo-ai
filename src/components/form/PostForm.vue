@@ -5,21 +5,22 @@
     v-slot="{ isSubmitting }"
     @submit="onSubmit"
     class="q-gutter-md"
+    aria-label="Post creation form"
   >
-    <BaseInput name="title" label="Title" />
+    <BaseInput
+      name="title"
+      label="Title"
+      aria-required="true"
+      aria-describedby="title-error"
+    />
 
-    <Field v-slot="{ field, errorMessage }" name="body">
-      <q-input
-        v-model="field.value"
-        label="Body"
-        type="textarea"
-        :error-message="errorMessage"
-        :error="!!errorMessage"
-        outlined
-        @update:model-value="field.onChange"
-        @blur="field.onBlur"
-      />
-    </Field>
+    <BaseInput
+      name="body"
+      label="Body"
+      type="textarea"
+      aria-required="true"
+      aria-describedby="body-error"
+    />
 
     <div class="q-mt-md">
       <q-btn type="submit" color="primary" label="Submit" :loading="isSubmitting" />
@@ -30,15 +31,23 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { Form, Field } from 'vee-validate';
+import { Form } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import type { Post } from '@/types/models';
 import BaseInput from '@/components/form/BaseInput.vue';
 import { postSchema, type PostFormValues } from '@/validation/schemas';
+import type { PropType } from 'vue';
 
-const props = defineProps<{
-  post?: Post;
-}>();
+const props = defineProps({
+  post: {
+    type: Object as PropType<Post>,
+    default: undefined,
+    validator: (value: Post) => {
+      // If a post is provided, it must have an id
+      return value ? typeof value.id === 'number' : true;
+    },
+  },
+});
 
 const emit = defineEmits<{
   (e: 'submit', values: PostFormValues): void;

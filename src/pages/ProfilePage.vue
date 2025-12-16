@@ -54,7 +54,7 @@ import { useForm, useField } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { profileSchema } from '@/validation/schemas';
 import { watch } from 'vue';
-import type { User } from '@/types/user';
+import type { User } from '@/types/models';
 
 const authStore = useAuthStore();
 const router = useRouter();
